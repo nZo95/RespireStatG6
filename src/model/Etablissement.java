@@ -86,6 +86,18 @@ public class Etablissement {
 		return coordonnees;
 	}
 
+	public int calculateDistance() 
+	{
+		double startLatitudeRad = Math.toRadians(48.853);
+		double startLongitudeRad = Math.toRadians(2.35);
+		double endLatitudeRad = Math.toRadians(coordonnees.getLatitude());
+		double endLongitudeRad = Math.toRadians(coordonnees.getLongitude());
+	
+		double x = (endLongitudeRad - startLongitudeRad) * Math.cos((startLatitudeRad + endLatitudeRad) / 2);
+		double y = (endLatitudeRad - startLatitudeRad);
+		
+		return (int)Math.sqrt(x * x + y * y) * 6371;
+	}
 
 	public String getNomEtablissement() {
 		return nomEtablissement;
