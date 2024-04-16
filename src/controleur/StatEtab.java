@@ -172,7 +172,7 @@ public class StatEtab {
 	public static Etablissement getPlusPolluantPM25(ArrayList<Etablissement> l, int annee) {
 		Etablissement etablissementPolluant = l.get(0);
 		
-		for (Etablissement etablissement : l) 
+		for (Etablissement etablissement : l)
 		{
 			if (etablissement != etablissementPolluant && etablissement.getPollutionPM25(annee) > etablissementPolluant.getPollutionPM25(annee))
 			{
