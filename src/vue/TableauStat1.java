@@ -86,7 +86,7 @@ public class TableauStat1 extends AbstractTableModel{
 
 			case 5:
 
-				return etabs[columnIndex-1].calculateDistance() + "km";
+				return etabs[columnIndex-1].calculateDistance();
 
 			default:
 				throw new IllegalArgumentException();

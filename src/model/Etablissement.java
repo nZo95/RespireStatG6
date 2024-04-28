@@ -86,7 +86,7 @@ public class Etablissement {
 		return coordonnees;
 	}
 
-	public long calculateDistance() 
+	public String calculateDistance() 
 	{
 		double startLatitudeRad = Math.toRadians(48.853);
 		double startLongitudeRad = Math.toRadians(2.35);
@@ -96,7 +96,7 @@ public class Etablissement {
 		double x = (endLongitudeRad - startLongitudeRad) * Math.cos((startLatitudeRad + endLatitudeRad) / 2);
 		double y = (endLatitudeRad - startLatitudeRad);
 		
-		return Math.round(Math.sqrt(x * x + y * y) * 6371);
+		return String.format("%.1f", (Math.sqrt(x * x + y * y) * 6371)) + " km";
 	}
 
 	public String getNomEtablissement() {
