@@ -34,7 +34,7 @@ public class FenetrePrincipale extends JFrame{
 	private void build(){
 		File f;
 		String message="";
-        /* do {
+        do {
         	csvPath = JOptionPane.showInputDialog( "Entrez le chemin vers le fichier : "+csvFileName );
 			f = new File(csvPath+"/"+csvFileName);
 			if(!f.exists())
@@ -43,8 +43,7 @@ public class FenetrePrincipale extends JFrame{
 				message = "Le fichier a été trouvé.";
 			JOptionPane.showMessageDialog(null, message+"\n"+csvPath+"/"+csvFileName);	
         }while(!f.exists());
-		ConvertCSV.chargerEtablissements(csvPath+"/"+csvFileName); */
-		ConvertCSV.chargerEtablissements("C:/Users/enzox/Desktop/SLAM/RespireStatG6/"+csvFileName);
+		ConvertCSV.chargerEtablissements(csvPath+"/"+csvFileName);
 		setTitle("RespireStat");
 		setSize(960,920);
 		setLocationRelativeTo(null);
