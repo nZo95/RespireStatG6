@@ -26,7 +26,7 @@ public class TableauStat1 extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		return 5;
+		return 6;
 	}
 	
 	@Override
@@ -54,6 +54,10 @@ public class TableauStat1 extends AbstractTableModel{
 				// PM25
 				return "Taux";
 
+			case 5:
+
+				return "Distance";
+
 			default:
 				throw new IllegalArgumentException();
 			}
@@ -79,6 +83,10 @@ public class TableauStat1 extends AbstractTableModel{
 			case 4:
 				// PM25
 				return etabs[columnIndex-1].getPollutionNO2(annee);
+
+			case 5:
+
+				return etabs[columnIndex-1].calculateDistance() + "km";
 
 			default:
 				throw new IllegalArgumentException();

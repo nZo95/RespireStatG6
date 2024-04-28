@@ -52,9 +52,7 @@ public class TableauStat2 extends AbstractTableModel{
 			default:
 				throw new IllegalArgumentException();
 			}
-					
-		
 
 	}
-	
+		
 }

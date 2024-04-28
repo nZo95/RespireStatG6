@@ -11,7 +11,7 @@ public class CoordGPS {
 		latitude = lat;
 		longitude = lon;
 	}
-	
+ 	
 	private static String[] extractLatLongFromGeometry(String geometry) {
 		String extract = geometry.substring(2, geometry.length()-1);
 		String[] coord = extract.split(", ");
@@ -33,6 +33,4 @@ public class CoordGPS {
 	public String toString() {
 		return "CoordGPS [latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
-
-	
 }
