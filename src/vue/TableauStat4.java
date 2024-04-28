@@ -5,18 +5,31 @@ import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.ConvertCSV;
+import controleur.StatEtab;
 
 public class TableauStat4 extends AbstractTableModel{
 	private static final long serialVersionUID = 1L;
-	private final String[] entetes = { "Département", "NO2", "PM10", "PM25" };	
-	private final HashMap<String, Double> moyenneDepartementNO2;
-	private final HashMap<String, Double> moyenneDepartementPM10;
-	private final HashMap<String, Double> moyenneDepartementPM25;
+	private final String[] entetes = { "Département ", "NO2", "PM10", "PM25" };	
+	private final double[] evolutionDepartementNO2;
+	private final double[] evolutionDepartementPM10;
+	private final double[] evolutionDepartementPM25;
 	
-	public TableauStat4(HashMap<String, Double> moyenneDepartementNO2, HashMap<String, Double> moyenneDepartementPM10, HashMap<String, Double> moyenneDepartementPM25) {
-		this.moyenneDepartementNO2 = moyenneDepartementNO2;
-		this.moyenneDepartementPM10 = moyenneDepartementPM10;
-		this.moyenneDepartementPM25 = moyenneDepartementPM25;
+	public TableauStat4(String dpt) {
+		evolutionDepartementNO2 = new double[5];
+		evolutionDepartementPM10 = new double[5];
+		evolutionDepartementPM25 = new double[5];
+
+		double startEvolutionNO2 = StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, 2012);
+		double startEvolutionPM10 = StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, 2012);
+		double startEvolutionPM25 = StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, 2012);
+
+		for (int i = 0; i < 5; i++)
+		{
+			evolutionDepartementNO2[i] = ((StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionNO2) / startEvolutionNO2) * 100;
+			evolutionDepartementPM10[i] = ((StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionPM10) / startEvolutionPM10) * 100;
+			evolutionDepartementPM25[i] = ((StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionPM25) / startEvolutionPM25) * 100;
+		}
+		entetes[0] += dpt;
 	}
 	
 	@Override
@@ -30,27 +43,43 @@ public class TableauStat4 extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		return ConvertCSV.listeDepartements.size();
+		return 5;
 	}
 	
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-
-			switch (columnIndex) {
+		double value;
+		switch (columnIndex) 
+		{
 			case 0:
-				return ConvertCSV.listeDepartements.get(rowIndex);
+				return 2013 + rowIndex;
 			case 1:
-				return moyenneDepartementNO2.get(ConvertCSV.listeDepartements.get(rowIndex));
+				value = (double)Math.round(evolutionDepartementNO2[rowIndex] * 100) / 100;
+				if (value >= 0)
+				{
+					return "+" + value + "%";
+				}
+				return value + "%";
 
 			case 2:
-				return moyenneDepartementPM10.get(ConvertCSV.listeDepartements.get(rowIndex));
+				value = (double)Math.round(evolutionDepartementPM10[rowIndex] * 100) / 100;
+				if (value >= 0)
+				{
+					return "+" + value + "%";
+				}
+				return value + "%";
 
 			case 3:
-				return moyenneDepartementPM25.get(ConvertCSV.listeDepartements.get(rowIndex));
+				value = (double)Math.round(evolutionDepartementPM25[rowIndex] * 100) / 100;
+				if (value >= 0)
+				{
+					return "+" + value + "%";
+				}
+				return value + "%";
 
 			default:
 				throw new IllegalArgumentException();
-			}
+		}
 	}
 }

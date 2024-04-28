@@ -160,33 +160,23 @@ public class FenetrePrincipale extends JFrame{
 		
 		onglet4.add(spane);
 
+		//ONGLET 5
+		//TODO Faire l'onglet 5 : il ressemble à aucun onglet !
 		onglets.addTab("Moyenne par département 2017", onglet4);
 
 		JPanel onglet5 = new JPanel();
+		for(String dpt : ConvertCSV.listeDepartements) 
+		{
+			TableauStat4 tab4 = new TableauStat4(dpt);
 
-		HashMap<String, Double> moyenneDepartementNO2F = new HashMap<String, Double>();
-		HashMap<String, Double> moyenneDepartementPM10F = new HashMap<String, Double>();
-		HashMap<String, Double> moyenneDepartementPM25F = new HashMap<String, Double>();
-		for(String dpt : ConvertCSV.listeDepartements) {
-			int annee = 2012;
-			for (int i = 0; i < 6; i++)
-			{
-				moyenneDepartementNO2F.put(dpt + annee, StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, annee));
-				moyenneDepartementPM10F.put(dpt + annee, StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, annee));
-				moyenneDepartementPM25F.put(dpt + annee, StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, annee));
-				annee += 1;
-			}
+			table = new JTable(tab4);
+			spane = new JScrollPane(table);
+			spane.setPreferredSize(new Dimension(740,100));
+
+			onglet5.add(spane);
 		}
 
-		TableauStat4 tab4 = new TableauStat4(moyenneDepartementNO2F, moyenneDepartementPM10F, moyenneDepartementPM25F);
-
-		table = new JTable(tab4);
-		spane = new JScrollPane(table);
-		spane.setPreferredSize(new Dimension(740,830));
-		
-		onglet5.add(spane);
-
-		onglets.addTab("Evolution des départements", onglet5);
+		onglets.addTab("Evolution par département de 2012 - 2017", onglet5);
 
 		panel.add(onglets);
 
