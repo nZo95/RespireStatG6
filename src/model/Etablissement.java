@@ -96,7 +96,7 @@ public class Etablissement {
 		double x = (endLongitudeRad - startLongitudeRad) * Math.cos((startLatitudeRad + endLatitudeRad) / 2);
 		double y = (endLatitudeRad - startLatitudeRad);
 		
-		return String.format("%.1f", (Math.sqrt(x * x + y * y) * 6371)) + " km";
+		return String.format("%.2f", (Math.sqrt(x * x + y * y) * 6371)) + " km";
 	}
 
 	public String getNomEtablissement() {
