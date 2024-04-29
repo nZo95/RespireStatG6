@@ -13,18 +13,30 @@ public class TableauStat4 extends AbstractTableModel{
 	private final double[] evolutionDepartementNO2;
 	private final double[] evolutionDepartementPM10;
 	private final double[] evolutionDepartementPM25;
+
+	private int yearCount;
 	
-	public TableauStat4(String dpt) {
-		evolutionDepartementNO2 = new double[5];
-		evolutionDepartementPM10 = new double[5];
-		evolutionDepartementPM25 = new double[5];
+	public TableauStat4(String dpt, int yearCount) {
+
+		this.yearCount = yearCount;
+
+		evolutionDepartementNO2 = new double[yearCount];
+		evolutionDepartementPM10 = new double[yearCount];
+		evolutionDepartementPM25 = new double[yearCount];
 
 		double startEvolutionNO2 = StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, 2012);
 		double startEvolutionPM10 = StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, 2012);
 		double startEvolutionPM25 = StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, 2012);
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < yearCount; i++)
 		{
+			if (i != 0)
+			{
+				startEvolutionNO2 = StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, i - 1 + 2013);
+				startEvolutionPM10 = StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, i - 1 + 2013);
+				startEvolutionPM25 = StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, i - 1 + 2013);
+			}
+
 			evolutionDepartementNO2[i] = ((StatEtab.getMoyennePolluantNO2Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionNO2) / startEvolutionNO2) * 100;
 			evolutionDepartementPM10[i] = ((StatEtab.getMoyennePolluantPM10Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionPM10) / startEvolutionPM10) * 100;
 			evolutionDepartementPM25[i] = ((StatEtab.getMoyennePolluantPM25Dpt(ConvertCSV.listeEtab, dpt, i + 2013) - startEvolutionPM25) / startEvolutionPM25) * 100;
@@ -43,9 +55,8 @@ public class TableauStat4 extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		return 5;
+		return yearCount;
 	}
-	
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -54,29 +65,36 @@ public class TableauStat4 extends AbstractTableModel{
 		{
 			case 0:
 				return 2013 + rowIndex;
+
 			case 1:
-				value = (double)Math.round(evolutionDepartementNO2[rowIndex] * 100) / 100;
+				value = evolutionDepartementNO2[rowIndex];
+
 				if (value >= 0)
 				{
-					return "+" + value + "%";
+					return "+" + String.format("%.2f", value) + "%";
 				}
-				return value + "%";
+
+				return String.format("%.2f", value) + "%";
 
 			case 2:
-				value = (double)Math.round(evolutionDepartementPM10[rowIndex] * 100) / 100;
+				value = evolutionDepartementPM10[rowIndex];
+				
 				if (value >= 0)
 				{
-					return "+" + value + "%";
+					return "+" + String.format("%.2f", value) + "%";
 				}
-				return value + "%";
+
+				return String.format("%.2f", value) + "%";
 
 			case 3:
-				value = (double)Math.round(evolutionDepartementPM25[rowIndex] * 100) / 100;
+				value = evolutionDepartementPM25[rowIndex];
+				
 				if (value >= 0)
 				{
-					return "+" + value + "%";
+					return "+" + String.format("%.2f", value) + "%";
 				}
-				return value + "%";
+
+				return String.format("%.2f", value) + "%";
 
 			default:
 				throw new IllegalArgumentException();

@@ -166,7 +166,7 @@ public class FenetrePrincipale extends JFrame{
 		JPanel onglet5 = new JPanel();
 		for(String dpt : ConvertCSV.listeDepartements) 
 		{
-			TableauStat4 tab4 = new TableauStat4(dpt);
+			TableauStat4 tab4 = new TableauStat4(dpt, 5);
 
 			table = new JTable(tab4);
 			spane = new JScrollPane(table);
